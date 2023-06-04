@@ -1,86 +1,43 @@
-#include <ctype.h>
-#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <iostream>
-using namespace std;
-#include <libpwdgen/pwdgenerator.h>
 
-#include <ctest.h>
+double combinations(int pool, int select);
+double factorial(int value);
 
-CTEST(TEST_Generator, check_flag_lowercase)
-{
-	bool isAllLower = true;
-	char buf[256];
-	string pw1;
-	string password = PWD_Generator().generate(10, true, false, false, false);
-	strcpy(buf, password.c_str());
-	for (int i = 0; i < 10; i++) {
-	    	if (!islower(buf[i])) {
-	      		isAllLower = false;
-				break;
-	    	}
-  	}
-	ASSERT_EQUAL(true, isAllLower);
-	cout <<"Test_flag_lowercase OK: " << password << endl;
+void main(){
+    int choices,chosen;
+    printf("enter the number of choices:> ");
+    int result = scanf("%d",&choices);
+    if(result<0){
+        printf("\nMust enter an integer value. exiting..\n");
+        return;
+    }
+    printf("enter the number to be chosen from pool of choices:> ");
+    result = scanf("%d",&chosen);
+    if(result<0){
+        printf("\nMust enter an integer value. exiting..\n");
+        return;
+    }    
+    if(chosen>choices){
+        printf("number chosen is greater than the possible choices..exiting.\n");
+        return;
+    }
+    
+    printf("possible combinations: %.0f\n",combinations(choices,chosen));
 }
 
-CTEST(TEST_Generator, check_flag_uppercase)
-{
-	bool isAllUpper = true;
-	char buf[256];
-	string pw1;
-	string password = PWD_Generator().generate(10, false, true, false, false);
-	strcpy(buf, password.c_str());
-	for (int i = 0; i < 10; i++) {
-	    	if (!isupper(buf[i])) {
-	      		isAllUpper = false;
-				break;
-	    	}
-  	}
-	ASSERT_EQUAL(true, isAllUpper);
-	cout <<"Test_flag_uppercase OK: " << password << endl;
+double combinations(int pool,int select){
+    return factorial(pool)/((factorial(select))*(factorial(pool - select)));
 }
 
-CTEST(TEST_Generator, check_flag_digit)
-{
-	bool isAllDigits = true;
-	char buf[256];
-	string pw1;
-	string password = PWD_Generator().generate(10, false, false, true, false);
-	strcpy(buf, password.c_str());
-	for (int i = 0; i < 10; i++) {
-	    	if (!isdigit(buf[i])) {
-	      		isAllDigits = false;
-				break;
-	    	}
-  	}
-	ASSERT_EQUAL(true, isAllDigits);
-	cout <<"Test_flag_digit OK: " << password << endl;
-}
-
-CTEST(TEST_Generator, check_flag_special)
-{
-	bool isAllSpecial = true;
-	char buf[256];
-	string pw1;
-	string password = PWD_Generator().generate(10, false, false, false, true);
-	strcpy(buf, password.c_str());
-	for (int i = 0; i < 10; i++) {
-		bool ifHaveSpecialSymbol = false;
-		for (char c : pwd_special)
-		{
-	    	if (buf[i] == c) {
-	      		ifHaveSpecialSymbol = true;
-	    	}
-		}
-		if (!ifHaveSpecialSymbol)
-		{
-			isAllSpecial = false;
-			break;
-		}
-  	}
-	ASSERT_EQUAL(true, isAllSpecial);
-	cout <<"Test_flag_special OK: " << password << endl;
+double factorial(int value){
+    int i = 0;
+    double answer = 1.;
+    if(value > 170 || value <= 0){
+        return 0;
+    }
+    for(i=1;i<value+1;i++){
+        answer *= i;
+    }
+    return answer;
 }
