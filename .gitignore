@@ -1,19 +1,6 @@
-# Folders
-bin/
-deb/
-doc-pak/
-autom4te.*/
-
-# Files by mask
-.*~
+*.d
 *.o
-*.m4
+*.a
+*.vscode
 *.log
-*.scan
-*.status
-.fuse_hidden*
-
-# Files by name
-description-pak
-Makefile
-lfsr.c
+*.~
