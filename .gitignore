@@ -16,3 +16,4 @@ autom4te.*/
 # Files by name
 description-pak
 Makefile
+lfsr.c
