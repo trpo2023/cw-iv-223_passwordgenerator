@@ -1,10 +1,13 @@
-#make file, install target just places compiled pwGen into $HOME/bin
-CC=gcc
-DIR=/home/$$USER/bin
-MAKE_DIR=$(PWD)
+CC = gcc
+CFLAGS = -o
 
-pwGen: $(MAKE_DIR)/Main/pwGen.c
-	$(CC) $< -o $@
-install:
-	make pwGen
-	mv pwGen $(DIR)
+TARGET = pwgen
+SRCS = pwgen.c
+
+all: $(TARGET)
+
+$(TARGET): $(SRCS)
+	$(CC) $(CFLAGS) $^ -o $@
+
+clean:
+	rm -f $(TARGET)
